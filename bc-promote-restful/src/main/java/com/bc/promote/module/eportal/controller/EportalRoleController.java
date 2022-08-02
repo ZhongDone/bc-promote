@@ -39,7 +39,7 @@ public class EportalRoleController {
     }
 
     @ApiOperation(value = "分页查询", notes = "分页查询")
-    @GetMapping("/queryListPage")
+    @PostMapping("/queryListPage")
     public Result<?> queryListPage(@RequestBody PageReqDTO<EportalRole> pageReqDTO) {
         log.info("角色表-分页查询接口开始，请求参数：{}", JSONUtil.toJsonStr(pageReqDTO));
         try{

@@ -48,6 +48,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     if(null != pageReqDTO.getEntity()){
       ${entity} entity = pageReqDTO.getEntity();
       Page<${entity}> page = new Page<>(pageReqDTO.getPageNo(),pageReqDTO.getPageSize());
+      page.setOptimizeCountSql(false);
       LambdaQueryWrapper<${entity}> queryWrapper = Wrappers.lambdaQuery(entity);
       return this.page(page, queryWrapper);
     }

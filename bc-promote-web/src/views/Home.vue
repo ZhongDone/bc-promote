@@ -24,7 +24,13 @@
             <el-container class="homeContainer">
                 <!--侧边栏菜单-->
                 <el-aside width="250px" class="homeAside">
-                    <el-menu router class="el-menu-vertical-demo" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+                    <el-menu
+                            router
+                            class="el-menu-vertical-demo"
+                            background-color="#545c64"
+                            text-color="#fff"
+                            active-text-color="#409EFF"
+                            size="small">
                         <div v-for="(item,index) in routes" :key="index">
                             <!-- 一级菜单（没有任何子级菜单）-->
                             <el-menu-item :index="item.path" v-if="!item.children"><i :class="item.iconCls"></i>{{item.name}}</el-menu-item>
