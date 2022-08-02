@@ -36,7 +36,7 @@ public class EportalResourceController {
 
 
     @ApiOperation(value = "查询list", notes = "查询list")
-    @GetMapping("/queryList")
+    @PostMapping("/queryList")
     public Result<?> queryList(@RequestBody EportalResource eportalResource) {
         log.info("菜单资源表-查询List接口开始，请求参数：{}", JSONUtil.toJsonStr(eportalResource));
         try{
@@ -50,7 +50,7 @@ public class EportalResourceController {
     }
 
     @ApiOperation(value = "分页查询", notes = "分页查询")
-    @GetMapping("/queryListPage")
+    @PostMapping("/queryListPage")
     public Result<?> queryListPage(@RequestBody PageReqDTO<EportalResource> pageReqDTO) {
         log.info("菜单资源表-分页查询接口开始，请求参数：{}", JSONUtil.toJsonStr(pageReqDTO));
         try{

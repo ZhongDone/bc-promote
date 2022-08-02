@@ -30,7 +30,7 @@ public class EportalManageController {
 
 
     @ApiOperation(value = "查询list", notes = "查询list")
-    @GetMapping("/queryList")
+    @PostMapping("/queryList")
     public Result<?> queryList(@RequestBody EportalManage eportalManage) {
         log.info("管理机构-查询List接口开始，请求参数：{}", JSONUtil.toJsonStr(eportalManage));
         try{
@@ -44,7 +44,7 @@ public class EportalManageController {
     }
 
     @ApiOperation(value = "分页查询", notes = "分页查询")
-    @GetMapping("/queryListPage")
+    @PostMapping("/queryListPage")
     public Result<?> queryListPage(@RequestBody PageReqDTO<EportalManage> pageReqDTO) {
         log.info("管理机构-分页查询接口开始，请求参数：{}", JSONUtil.toJsonStr(pageReqDTO));
         try{

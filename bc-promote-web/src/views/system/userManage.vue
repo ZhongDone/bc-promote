@@ -9,7 +9,22 @@
             <div class="text item">
                 <!--查询条件-->
                 <div>
-                    
+                    <el-form label-width="80px"
+                             size="small"
+                             label-position="right"
+                             :model="queryDTO">
+                        <el-row>
+                            <el-col :span="6">
+
+                            </el-col>
+                            <el-col :span="6">
+
+                            </el-col>
+                            <el-col :span="6">
+
+                            </el-col>
+                        </el-row>
+                    </el-form>
                 </div>
 
                 <!--表格-->

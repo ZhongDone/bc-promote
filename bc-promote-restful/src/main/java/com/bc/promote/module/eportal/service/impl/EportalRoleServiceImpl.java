@@ -48,6 +48,7 @@ public class EportalRoleServiceImpl extends ServiceImpl<EportalRoleMapper, Eport
     if(null != pageReqDTO.getEntity()){
       EportalRole entity = pageReqDTO.getEntity();
       Page<EportalRole> page = new Page<>(pageReqDTO.getPageNo(),pageReqDTO.getPageSize());
+      page.setOptimizeCountSql(false);
       LambdaQueryWrapper<EportalRole> queryWrapper = Wrappers.lambdaQuery(entity);
       return this.page(page, queryWrapper);
     }
