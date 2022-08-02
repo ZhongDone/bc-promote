@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 万爷
- * @since 2022-07-27
+ * @since 2022-08-02
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -76,8 +76,8 @@ public class EportalUser implements Serializable {
     private String email;
 
     @ApiModelProperty(value = "电话")
-    @TableField("MOBEIL")
-    private String mobeil;
+    @TableField("MOBILE")
+    private String mobile;
 
     @ApiModelProperty(value = "创建时间")
     @TableField("CREATED_DATE")

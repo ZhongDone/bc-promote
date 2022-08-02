@@ -12,7 +12,7 @@ import java.util.List;
 * 用户表 服务类
 *
 * @author 万爷
-* @since 2022-07-27
+* @since 2022-08-02
 */
 public interface IEportalUserService extends IService<EportalUser> {
 

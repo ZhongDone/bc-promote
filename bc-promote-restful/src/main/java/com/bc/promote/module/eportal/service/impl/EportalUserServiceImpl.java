@@ -13,6 +13,7 @@ import com.bc.promote.module.eportal.entity.EportalUser;
 import com.bc.promote.module.eportal.mapper.EportalUserMapper;
 import com.bc.promote.module.eportal.service.IEportalUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,11 +23,13 @@ import java.util.Map;
 * 用户表 服务实现类
 *
 * @author 万爷
-* @since 2022-07-27
+* @since 2022-08-02
 */
 @Service
 public class EportalUserServiceImpl extends ServiceImpl<EportalUserMapper, EportalUser> implements IEportalUserService {
 
+  @Autowired
+  private EportalUserMapper eportalUserMapper;
   /**
   * 查询list
   * @param eportalUser
@@ -47,7 +50,8 @@ public class EportalUserServiceImpl extends ServiceImpl<EportalUserMapper, Eport
   public IPage<EportalUser> queryListPage(PageReqDTO<EportalUser> pageReqDTO) {
     if(null != pageReqDTO.getEntity()){
       EportalUser entity = pageReqDTO.getEntity();
-      Page<EportalUser> page = new Page<>(pageReqDTO.getPageNo(),pageReqDTO.getPageSize());
+      int total = this.count();
+      Page<EportalUser> page = new Page<>(pageReqDTO.getPageNo(),pageReqDTO.getPageSize(),total);
       LambdaQueryWrapper<EportalUser> queryWrapper = Wrappers.lambdaQuery(entity);
       return this.page(page, queryWrapper);
     }

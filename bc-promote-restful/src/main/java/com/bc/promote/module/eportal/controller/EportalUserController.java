@@ -2,8 +2,11 @@ package com.bc.promote.module.eportal.controller;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.bc.promote.common.base.annotation.Authorization;
+import com.bc.promote.common.base.annotation.CurrentUser;
 import com.bc.promote.common.base.model.PageReqDTO;
 import com.bc.promote.common.base.model.Result;
+import com.bc.promote.common.base.session.model.UserModel;
 import com.bc.promote.module.eportal.entity.EportalUser;
 import com.bc.promote.module.eportal.service.IEportalUserService;
 import io.swagger.annotations.Api;
@@ -39,10 +42,18 @@ public class EportalUserController {
     }
 
     @ApiOperation(value = "分页查询", notes = "分页查询")
-    @GetMapping("/queryListPage")
-    public Result<?> queryListPage(@RequestBody PageReqDTO<EportalUser> pageReqDTO) {
+    @PostMapping("/queryListPage")
+    @Authorization
+    public Result<?> queryListPage(@RequestBody PageReqDTO<EportalUser> pageReqDTO, @CurrentUser UserModel userModel) {
         log.info("用户表-分页查询接口开始，请求参数：{}", JSONUtil.toJsonStr(pageReqDTO));
         try{
+            if (pageReqDTO.getEntity() != null) {
+                pageReqDTO.getEntity().setParentId(userModel.getId());
+            } else {
+                EportalUser eportalUser = new EportalUser();
+                eportalUser.setParentId(userModel.getId());
+                pageReqDTO.setEntity(eportalUser);
+            }
             IPage<EportalUser> page = eportalUserService.queryListPage(pageReqDTO);
             log.info("用户表-分页查询接口结束，返回参数：{}", JSONUtil.toJsonStr(page));
             return Result.ok(page);

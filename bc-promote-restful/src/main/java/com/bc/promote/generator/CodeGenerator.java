@@ -57,8 +57,8 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         // 项目地址
-        String projectPath = System.getProperty("user.dir");
-        // 输出文件夹
+        String projectPath = System.getProperty("user.dir")+"/bc-promote-restful";
+        // 输出文件夹sss
         gc.setOutputDir(projectPath + "/src/main/java");
         // 作者
         gc.setAuthor("万爷");
