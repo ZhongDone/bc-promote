@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bc.promote.module.eportal.mapper.EportalManageMapper">
+
+    <resultMap id="manageTreeMap" type="com.bc.promote.module.eportal.dto.ManageInfoDTO">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="PARENT_ID" jdbcType="BIGINT" property="parentId" />
+        <result column="LEVEL" jdbcType="VARCHAR" property="level" />
+        <result column="MANAGE_CODE" jdbcType="VARCHAR" property="manageCode" />
+        <result column="MANAGE_NAME" jdbcType="VARCHAR" property="manageName" />
+        <collection column="{parentId=id}" property="children" select="getManageTree"/>
+    </resultMap>
+
+    <select id="getManageTree" resultMap="manageTreeMap">
+        select
+        ID,
+        PARENT_ID,
+        LEVEL,
+        MANAGE_CODE,
+        MANAGE_NAME
+        from EPORTAL_MANAGE
+        where IS_DELETE = 0
+        and PARENT_ID=${parentId}
+    </select>
+</mapper>

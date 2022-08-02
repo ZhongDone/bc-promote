@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bc.promote.module.eportal.mapper.EportalResourceMapper">
+
+
+    <resultMap id="menuTreeMap" type="com.bc.promote.module.eportal.dto.MenuInfoDTO">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+        <result column="resource_name" jdbcType="VARCHAR" property="resourceName" />
+        <result column="resource_icon" jdbcType="VARCHAR" property="resourceIcon" />
+        <result column="resource_path" jdbcType="VARCHAR" property="resourcePath" />
+        <result column="roleId" jdbcType="VARCHAR" property="roleId" />
+        <collection column="{parentId=id,roleId=roleId}" property="children" select="queryMenuListByparentId"/>
+    </resultMap>
+
+    <!--查询菜单集合-->
+    <select id="queryMenuList" resultMap="menuTreeMap">
+    select
+        er.id,
+        er.parent_id,
+        er.resource_name,
+        er.resource_icon,
+        er.resource_path,
+        ${roleId} roleId
+    from eportal_resource er
+    where 1=1
+    and er.is_delete='0'
+    and er.parent_id= 0
+    and exists (
+        select
+            1
+        from eportal_role_resource err
+        where err.role_id=${roleId}
+        and err.resource_id=er.id
+    )
+  </select>
+
+    <select id="queryMenuListByparentId" resultMap="menuTreeMap">
+    select
+        er.id,
+        er.parent_id,
+        er.resource_name,
+        er.resource_icon,
+        er.resource_path,
+        ${roleId} roleId
+    from eportal_resource er
+    where 1=1
+    and er.is_delete='0'
+    and er.parent_id=#{parentId}
+    and exists (
+        select
+            1
+        from eportal_role_resource err
+        where err.role_id=${roleId}
+        and err.resource_id=er.id
+    )
+  </select>
+
+</mapper>
