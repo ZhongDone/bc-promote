@@ -1,6 +1,5 @@
 import {postRequest} from "./api";
 export const initMenu = (router, store) =>{
-    console.log(router,'router')
     if(store.state.routes.length>0){
         return;
     }
@@ -28,7 +27,6 @@ export const formatRoutes = (routes) =>{
         let name = router.resourceName;
         let iconCls = router.resourceIcon;
         let children = [];
-        console.log("path", path)
         let fmtRouter = {};
         if(router.children && router.children.length >0){
             children = formatRoutes(router.children);

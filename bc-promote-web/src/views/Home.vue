@@ -10,13 +10,12 @@
                 <div style="float:right;"></div>
                 <!--个人信息-->
                 <div style="float:right;width:200px; line-height: 60px">
-                    <el-avatar style="vertical-align:middle" src="	https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80"></el-avatar>
+                    <el-avatar style="vertical-align:middle" src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80"></el-avatar>
                     <el-dropdown style="vertical-align:middle;margin-left: 15px">
-                        <span class="el-dropdown-link">管理员<i class="el-icon-arrow-down el-icon--right"></i></span>
+                        <span class="el-dropdown-link">{{accountName}}<i class="el-icon-arrow-down el-icon--right"></i></span>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>个人资料</el-dropdown-item>
-                            <el-dropdown-item>修改密码</el-dropdown-item>
-                            <el-dropdown-item>退出登录</el-dropdown-item>
+                            <el-dropdown-item><span @click="modifyPassword()">修改密码</span></el-dropdown-item>
+                            <el-dropdown-item><span @click="loginOut()">退出登录</span></el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </div>
@@ -26,6 +25,7 @@
                 <el-aside width="250px" class="homeAside">
                     <el-menu
                             router
+                            :default-active="currentMenu"
                             class="el-menu-vertical-demo"
                             background-color="#545c64"
                             text-color="#fff"
@@ -74,12 +74,57 @@
 </template>
 
 <script>
+    import {getRequest} from "../utils/api";
+
     export default {
         name: 'Home',
+        watch: {
+            '$route' (to, from) {
+                console.log(to);
+                console.log(from);
+                this.getCurrentMenu()
+            }
+        },
+        data() {
+            return {
+                accountName:'',
+                currentMenu:'/home',
+            }
+        },
         computed:{
             routes(){
                 return this.$store.state.routes;
             }
+        },
+        created() {
+            this.getUserInfo();
+            this.getCurrentMenu();
+        },
+        methods: {
+            getUserInfo(){
+                getRequest('/eportal/getUserInfo').then(data => {
+                    this.accountName = data.content.accountName;
+                })
+            },
+            loginOut(){
+                alert('11111111')
+                getRequest('/eportal/loginOut').then(data => {
+                    console.log(data);
+                    this.$router.replace('/');
+                })
+            },
+            modifyPassword(){
+                this.$router.push('/system/userInfo')
+            },
+            getCurrentMenu () {
+                // 获取当前页面 菜单刷新后能自动选中
+                let currentUrl = window.location.href;
+                console.log("bbbbbb",currentUrl);
+                let currentPage = currentUrl.split('/#')[1].replace('#', '');
+                console.log("aaaaaaaaaaaaa",currentPage);
+                this.currentMenu = currentPage;
+            }
+
         }
     }
 

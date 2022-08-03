@@ -62,10 +62,12 @@
                         //验证登录表单数据，得到该接口的返回值
                         postRequest('/eportal/login', this.loginForm).then(getReturnValue => {
                             this.loading = false;
-                            if(getReturnValue){
+                            if(getReturnValue.code=='0'){
                                 const token = getReturnValue.content.token;
                                 window.sessionStorage.setItem('token', token);
                                 this.$router.replace('/Home');
+                            }else{
+                                this.$message.error(getReturnValue.message);
                             }
                         }).finally(()=>{
                             this.loading = false;
