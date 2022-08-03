@@ -108,7 +108,6 @@
                 })
             },
             loginOut(){
-                alert('11111111')
                 getRequest('/eportal/loginOut').then(data => {
                     console.log(data);
                     this.$router.replace('/');
