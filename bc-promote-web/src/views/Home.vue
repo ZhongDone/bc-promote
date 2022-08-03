@@ -7,7 +7,8 @@
                     <h4 style="color: #fff;text-align: center">互联网运营管理平台</h4>
                 </div>
                 <!--顶部路由地址-->
-                <div style="float:right;"></div>
+                <div style="float:left;">
+                </div>
                 <!--个人信息-->
                 <div style="float:right;width:200px; line-height: 60px">
                     <el-avatar style="vertical-align:middle" src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80"></el-avatar>
@@ -123,7 +124,7 @@
                 let currentPage = currentUrl.split('/#')[1].replace('#', '');
                 console.log("aaaaaaaaaaaaa",currentPage);
                 this.currentMenu = currentPage;
-            }
+            },
 
         }
     }
