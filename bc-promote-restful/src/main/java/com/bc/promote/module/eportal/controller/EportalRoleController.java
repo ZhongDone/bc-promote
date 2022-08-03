@@ -2,8 +2,11 @@ package com.bc.promote.module.eportal.controller;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.bc.promote.common.base.annotation.Authorization;
+import com.bc.promote.common.base.annotation.CurrentUser;
 import com.bc.promote.common.base.model.PageReqDTO;
 import com.bc.promote.common.base.model.Result;
+import com.bc.promote.common.base.session.model.UserModel;
 import com.bc.promote.module.eportal.entity.EportalRole;
 import com.bc.promote.module.eportal.service.IEportalRoleService;
 import io.swagger.annotations.Api;
@@ -54,9 +57,12 @@ public class EportalRoleController {
 
     @ApiOperation(value = "保存", notes = "保存")
     @PostMapping("/save")
-    public Result<?> save(@RequestBody EportalRole eportalRole) {
+    @Authorization
+    public Result<?> save(@RequestBody EportalRole eportalRole, @CurrentUser UserModel userModel) {
         log.info("角色表-保存接口开始，请求参数：{}", JSONUtil.toJsonStr(eportalRole));
         try{
+            eportalRole.setCreatedUser(userModel.getUserName());
+            eportalRole.setModifiedUser(userModel.getUserName());
             eportalRoleService.save(eportalRole);
             log.info("角色表-保存接口结束");
             return Result.ok("处理成功");
@@ -69,9 +75,12 @@ public class EportalRoleController {
 
     @ApiOperation(value = "修改", notes = "修改")
     @PostMapping("/update")
-    public Result<?> update(@RequestBody EportalRole eportalRole) {
+    @Authorization
+    public Result<?> update(@RequestBody EportalRole eportalRole, @CurrentUser UserModel userModel) {
         log.info("角色表-修改接口开始，请求参数：{}", JSONUtil.toJsonStr(eportalRole));
         try{
+            eportalRole.setCreatedUser(userModel.getUserName());
+            eportalRole.setModifiedUser(userModel.getUserName());
             eportalRoleService.updateById(eportalRole);
             log.info("角色表-修改接口结束");
             return Result.ok("处理成功");

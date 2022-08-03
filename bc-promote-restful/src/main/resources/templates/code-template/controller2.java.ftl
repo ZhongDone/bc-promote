@@ -3,6 +3,9 @@ package ${package.Controller};
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bc.promote.common.base.model.PageReqDTO;
+import com.bc.promote.common.base.annotation.Authorization;
+import com.bc.promote.common.base.annotation.CurrentUser;
+import com.bc.promote.common.base.session.model.UserModel;
 import com.bc.promote.common.base.model.Result;
 import ${package.Entity}.${entity};
 import ${package.Service}.${table.serviceName};
@@ -54,9 +57,12 @@ public class ${table.controllerName} {
 
     @ApiOperation(value = "保存", notes = "保存")
     @PostMapping("/save")
-    public Result<?> save(@RequestBody ${entity} ${entity?uncap_first}) {
+    @Authorization
+    public Result<?> save(@RequestBody ${entity} ${entity?uncap_first}, @CurrentUser UserModel userModel) {
         log.info("${table.comment!}-保存接口开始，请求参数：{}", JSONUtil.toJsonStr(${entity?uncap_first}));
         try{
+            ${entity?uncap_first}.setCreatedUser(userModel.getUserName());
+            ${entity?uncap_first}.setModifiedUser(userModel.getUserName());
             ${entity?uncap_first}Service.save(${entity?uncap_first});
             log.info("${table.comment!}-保存接口结束");
             return Result.ok("处理成功");
@@ -69,9 +75,12 @@ public class ${table.controllerName} {
 
     @ApiOperation(value = "修改", notes = "修改")
     @PostMapping("/update")
-    public Result<?> update(@RequestBody ${entity} ${entity?uncap_first}) {
+    @Authorization
+    public Result<?> update(@RequestBody ${entity} ${entity?uncap_first}, @CurrentUser UserModel userModel) {
         log.info("${table.comment!}-修改接口开始，请求参数：{}", JSONUtil.toJsonStr(${entity?uncap_first}));
         try{
+            ${entity?uncap_first}.setCreatedUser(userModel.getUserName());
+            ${entity?uncap_first}.setModifiedUser(userModel.getUserName());
             ${entity?uncap_first}Service.updateById(${entity?uncap_first});
             log.info("${table.comment!}-修改接口结束");
             return Result.ok("处理成功");

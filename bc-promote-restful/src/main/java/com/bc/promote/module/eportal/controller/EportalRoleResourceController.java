@@ -1,9 +1,14 @@
 package com.bc.promote.module.eportal.controller;
 
 import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.bc.promote.common.base.annotation.Authorization;
+import com.bc.promote.common.base.annotation.CurrentUser;
 import com.bc.promote.common.base.model.PageReqDTO;
 import com.bc.promote.common.base.model.Result;
+import com.bc.promote.common.base.session.model.UserModel;
 import com.bc.promote.module.eportal.entity.EportalRoleResource;
 import com.bc.promote.module.eportal.service.IEportalRoleResourceService;
 import io.swagger.annotations.Api;
@@ -54,9 +59,12 @@ public class EportalRoleResourceController {
 
     @ApiOperation(value = "保存", notes = "保存")
     @PostMapping("/save")
-    public Result<?> save(@RequestBody EportalRoleResource eportalRoleResource) {
+    @Authorization
+    public Result<?> save(@RequestBody EportalRoleResource eportalRoleResource, @CurrentUser UserModel userModel) {
         log.info("角色权限表-保存接口开始，请求参数：{}", JSONUtil.toJsonStr(eportalRoleResource));
         try{
+            eportalRoleResource.setCreatedUser(userModel.getUserName());
+            eportalRoleResource.setModifiedUser(userModel.getUserName());
             eportalRoleResourceService.save(eportalRoleResource);
             log.info("角色权限表-保存接口结束");
             return Result.ok("处理成功");
@@ -80,4 +88,21 @@ public class EportalRoleResourceController {
             return Result.error("角色权限表-修改接口-出现异常");
         }
     }
+
+    @ApiOperation(value = "根据角色Id删除", notes = "根据角色Id删除")
+    @DeleteMapping("/delete/{roleId}")
+    public Result<?> delete(@PathVariable("roleId") Long roleId) {
+        log.info("角色权限表-根据角色Id删除开始，请求参数：{}", JSONUtil.toJsonStr(roleId));
+        try{
+            QueryWrapper<EportalRoleResource> wrapper = new QueryWrapper<>();
+            wrapper.eq("ROLE_ID", roleId);
+            eportalRoleResourceService.remove(wrapper);
+            log.info("角色权限表-根据角色Id删除结束");
+            return Result.ok("处理成功");
+        }catch(Exception e){
+            log.error("角色权限表-根据角色Id删除-出现异常", e);
+            return Result.error("角色权限表-根据角色Id删除-出现异常");
+        }
+    }
+
 }

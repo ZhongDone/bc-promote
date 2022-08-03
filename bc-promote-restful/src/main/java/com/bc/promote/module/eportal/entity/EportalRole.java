@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -41,7 +44,7 @@ public class EportalRole implements Serializable {
 
     @ApiModelProperty(value = "创建时间")
     @TableField("CREATED_DATE")
-    private LocalDateTime createdDate;
+    private Date createdDate;
 
     @ApiModelProperty(value = "创建用户")
     @TableField("CREATED_USER")
@@ -49,7 +52,7 @@ public class EportalRole implements Serializable {
 
     @ApiModelProperty(value = "修改时间")
     @TableField("MODIFIED_DATE")
-    private LocalDateTime modifiedDate;
+    private Date modifiedDate;
 
     @ApiModelProperty(value = "修改用户")
     @TableField("MODIFIED_USER")

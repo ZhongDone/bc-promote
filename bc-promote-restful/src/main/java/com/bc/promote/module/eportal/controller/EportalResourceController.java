@@ -99,11 +99,18 @@ public class EportalResourceController {
         }
     }
 
-    @ApiOperation(value = "查询菜单树形结构", notes = "查询菜单树形结构")
+    @ApiOperation(value = "当前登录用户查询菜单树形结构", notes = "当前登录用户查询菜单树形结构")
     @Authorization
     @PostMapping("/getMenuTree")
     public Result<?> getMenuTree(@CurrentUser UserModel userModel){
         List<MenuInfoDTO> menuList = eportalResourceService.queryMenuList(userModel.getRoleId());
+        return Result.ok(menuList);
+    }
+
+    @ApiOperation(value = "根据角色Id查询菜单树形结构", notes = "根据角色Id查询菜单树形结构")
+    @GetMapping("/getMenuTree/{roleId}")
+    public Result<?> getMenuTree(@PathVariable("roleId") Long roleId){
+        List<MenuInfoDTO> menuList = eportalResourceService.queryMenuList(roleId);
         return Result.ok(menuList);
     }
 }
