@@ -53,6 +53,7 @@ public class EportalManageServiceImpl extends ServiceImpl<EportalManageMapper, E
     if(null != pageReqDTO.getEntity()){
       EportalManage entity = pageReqDTO.getEntity();
       Page<EportalManage> page = new Page<>(pageReqDTO.getPageNo(),pageReqDTO.getPageSize());
+      page.setOptimizeCountSql(false);
       LambdaQueryWrapper<EportalManage> queryWrapper = Wrappers.lambdaQuery(entity);
       return this.page(page, queryWrapper);
     }

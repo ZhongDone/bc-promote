@@ -120,7 +120,7 @@
 </template>
 
 <script>
-    import {getRequest, postRequest} from "../../utils/api";
+    import {postRequest} from "../../utils/api";
 
     export default {
         name: "roleManage",

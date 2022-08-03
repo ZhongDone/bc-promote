@@ -28,8 +28,6 @@ import java.util.Map;
 @Service
 public class EportalUserServiceImpl extends ServiceImpl<EportalUserMapper, EportalUser> implements IEportalUserService {
 
-  @Autowired
-  private EportalUserMapper eportalUserMapper;
   /**
   * 查询list
   * @param eportalUser
@@ -52,6 +50,7 @@ public class EportalUserServiceImpl extends ServiceImpl<EportalUserMapper, Eport
       EportalUser entity = pageReqDTO.getEntity();
       int total = this.count();
       Page<EportalUser> page = new Page<>(pageReqDTO.getPageNo(),pageReqDTO.getPageSize(),total);
+      page.setOptimizeCountSql(false);
       LambdaQueryWrapper<EportalUser> queryWrapper = Wrappers.lambdaQuery(entity);
       return this.page(page, queryWrapper);
     }
