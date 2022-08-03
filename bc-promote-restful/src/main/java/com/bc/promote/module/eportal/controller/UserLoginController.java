@@ -1,6 +1,9 @@
 package com.bc.promote.module.eportal.controller;
 
+import com.bc.promote.common.base.annotation.Authorization;
+import com.bc.promote.common.base.annotation.CurrentUser;
 import com.bc.promote.common.base.model.Result;
+import com.bc.promote.common.base.session.model.UserModel;
 import com.bc.promote.module.eportal.dto.LoginReqDTO;
 import com.bc.promote.module.eportal.dto.LoginResDTO;
 import com.bc.promote.module.eportal.service.UserLoginService;
@@ -34,6 +37,18 @@ public class UserLoginController {
             return Result.ok(loginResDTO);
         }catch (Exception e){
             log.error("登录出现异常：", e);
+            return Result.error(Result.ERROR,"系统异常，请稍后在试");
+        }
+    }
+
+    @ApiOperation(value = "获取用户信息", notes = "获取用户信息")
+    @GetMapping("/getUserInfo")
+    @Authorization
+    public Result<?> getUserInfo(@CurrentUser UserModel userModel){
+        try{
+            return Result.ok(userModel);
+        }catch (Exception e){
+            log.error("获取用户信息出现异常：", e);
             return Result.error(Result.ERROR,"系统异常，请稍后在试");
         }
     }

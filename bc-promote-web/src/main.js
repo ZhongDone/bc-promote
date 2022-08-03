@@ -11,6 +11,7 @@ import {getRequest} from "./utils/api";
 import {putRequest} from "./utils/api";
 import {deleteRequest} from "./utils/api";
 import {initMenu} from "./utils/menuUtil";
+import md5 from 'js-md5';
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);
@@ -19,6 +20,7 @@ Vue.prototype.postRequest=postRequest;
 Vue.prototype.getRequest=getRequest;
 Vue.prototype.putRequest=putRequest;
 Vue.prototype.deleteRequest=deleteRequest;
+Vue.prototype.$md5 = md5;
 
 // 配置路由前置守卫
 router.beforeEach((to, from, next)=>{

@@ -221,6 +221,9 @@
 
             }
         },
+        created() {
+            this.queryPageList();
+        },
         methods: {
             // 查询
             queryPageList(){
@@ -279,7 +282,7 @@
                 this.getCheckedKeys();
             },
             // 删除
-            handleDelete(){
+            handleDelete(row){
                 this.$confirm('确认删除角色?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
