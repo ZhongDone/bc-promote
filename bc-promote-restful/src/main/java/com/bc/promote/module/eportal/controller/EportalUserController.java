@@ -12,6 +12,7 @@ import com.bc.promote.module.eportal.service.IEportalUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,9 +66,14 @@ public class EportalUserController {
 
     @ApiOperation(value = "保存", notes = "保存")
     @PostMapping("/save")
-    public Result<?> save(@RequestBody EportalUser eportalUser) {
+    @Authorization
+    public Result<?> save(@RequestBody EportalUser eportalUser, @CurrentUser UserModel usermodel) {
         log.info("用户表-保存接口开始，请求参数：{}", JSONUtil.toJsonStr(eportalUser));
         try{
+            eportalUser.setParentId(usermodel.getId());
+            eportalUser.setCreatedUser(usermodel.getUserName());
+            eportalUser.setModifiedUser(usermodel.getUserName());
+            eportalUser.setPassword(DigestUtils.md5Hex("888888"));
             eportalUserService.save(eportalUser);
             log.info("用户表-保存接口结束");
             return Result.ok("处理成功");

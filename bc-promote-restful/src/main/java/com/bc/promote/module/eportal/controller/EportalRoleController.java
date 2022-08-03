@@ -28,8 +28,8 @@ public class EportalRoleController {
 
 
     @ApiOperation(value = "查询list", notes = "查询list")
-    @GetMapping("/queryList")
-    public Result<?> queryList(@RequestBody EportalRole eportalRole) {
+    @PostMapping("/queryList")
+    public Result<?> queryList(@RequestBody(required=false) EportalRole eportalRole) {
         log.info("角色表-查询List接口开始，请求参数：{}", JSONUtil.toJsonStr(eportalRole));
         try{
             List<EportalRole> list = eportalRoleService.queryList(eportalRole);
